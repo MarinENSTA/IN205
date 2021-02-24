@@ -67,7 +67,7 @@ public class Board //implements IBoard
 	    this.printlines();
 	}
 
-	/** Impression d'une ligne pour les deux grilles
+	/** Impression d'une ligne spécifique pour les deux grilles
 	@return pas de retour
 	*/
 	private void printlines()
@@ -105,7 +105,7 @@ public class Board //implements IBoard
 	  	System.out.print("\n");
 	}
 
-	/** Impression des premières lignes de la grille un peu particulières
+	/** Impression des deux premières lignes desgrilles, un peu particulières
 	@return pas de retour
 	*/
 	private void printupperline()
@@ -120,17 +120,42 @@ public class Board //implements IBoard
 
 	}
 
-	/*
----------------------------------------------------------------------------------
-	EXERCICES SUIVANTS NON INITIALISES DANS CE COMMIT
+	/**Fonction de deepcopy de la grille de navires
+	@return Retourne une grille de navire deepcopiée (non liée à la grille qu'elle copie)
+	*/
+	public char[][] deepcopyShips()
+	{
+		char[][] deepcopiedShips = new char[this.size][this.size];
+		for (int i = 0; i < this.size; i++)
+		{
+			for (int j = 0; j< this.size; j++)
+			{
+				if (this.navires[i][j]=='.')
+					deepcopiedShips[i][j]='.';
+				else 
+					deepcopiedShips[i][j]=this.navires[i][j];
+			}
+		}
+		return deepcopiedShips;
+	}
+
+	// Javadoc déjà écrite dans IBoard.java pour les fonctions de cet exercice.
 
 	public int getSize()
 	{
 		return this.size;
 	}
 
+	private char[][] getShips()
+	{
+		return this.navires;
+	}
+
+
 	public void putShip(AbstractShip ship, int x, int y)
 	{	
+		char[][] oldShips = new char[this.size][this.size];
+		oldShips = this.deepcopyShips();
 
 		try
 		{
@@ -138,7 +163,11 @@ public class Board //implements IBoard
 			{
 				for (int j = 0; j < ship.size ; j++)
 				{
-					navires[y][x+j] = ship.label;
+					if (this.navires[y][x+j]!='.')
+					{
+						throw new Illegal­Argument­Exception ("Bateau déjà présent à cet endroit");
+					}
+					this.navires[y][x+j] = ship.label;
 				}
 			}
 
@@ -146,6 +175,10 @@ public class Board //implements IBoard
 			{	
 				for (int j = 0; j < ship.size ; j++)
 				{
+					if (this.navires[y][x-j]!='.')
+					{
+						throw new Illegal­Argument­Exception ("Bateau déjà présent à cet endroit");
+					}
 					navires[y][x-j] = ship.label;
 				}
 			}
@@ -154,6 +187,10 @@ public class Board //implements IBoard
 			{
 				for (int i = 0; i < ship.size ; i++)
 				{
+					if (this.navires[y+i][x]!='.')
+					{
+						throw new Illegal­Argument­Exception ("Bateau déjà présent à cet endroit");
+					}
 					navires[y+i][x] = ship.label;
 				}
 			}
@@ -162,16 +199,26 @@ public class Board //implements IBoard
 			{
 				for (int i = 0; i < ship.size ; i++)
 				{
+					if (this.navires[y-i][x]!='.')
+					{
+						throw new Illegal­Argument­Exception ("Bateau déjà présent à cet endroit");
+					}
 					navires[y-i][x] = ship.label;
 				}
 			}
 		}
+		catch (Illegal­Argument­Exception e)
+		{
+
+			this.navires = oldShips;
+			System.out.println("Problème de type : " + e.toString()+"\n Création du navire sur la grille annulée");
+		}
 		catch (Exception e)
 		{
+			this.navires = oldShips;
 			System.out.println("Problème d'indice de type : " + e.toString() );
 			System.out.println("Initialisation du bateau '" + ship.nom.toString() + "' d'orientation '" + ship.orientation + "' annulée\n");
 		}
-
 	}
 
 	public boolean hasShip(int x, int y) 
@@ -214,8 +261,6 @@ public class Board //implements IBoard
 			System.out.println("Réponse à l'appel getHit("+x+","+y+") impossible, false renvoyé par défaut\n");
 			return false;
 		}
-	}*/
-
-
+	}
 	
 }
