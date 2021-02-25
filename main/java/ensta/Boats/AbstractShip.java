@@ -6,6 +6,7 @@ public class AbstractShip
 	public String nom;
 	public int size;
 	public char orientation;
+	public int strikeCount;
 
 	/**Constructeur valué de navire, exercice 2
 	@param nom Nom du navire
@@ -29,6 +30,16 @@ public class AbstractShip
 	public void setOrientation(char newOrientation)
 	{
 		this.orientation = newOrientation;
+	}
+
+	public String getName()
+	{
+		return this.nom;
+	}
+
+	public int getLength()
+	{
+		return this.size;
 	}
 
 
