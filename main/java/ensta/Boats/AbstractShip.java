@@ -8,6 +8,7 @@ public class AbstractShip
 	public enum Orientation {NORTH,SOUTH,EAST,WEST};
 	public Orientation orientation;
 	public int strikeCount;
+	public boolean put; // Pour savoir si le navire a été posé avec succes sur un board
 
 	/**Constructeur valué de navire, exercice 2
 	@param nom Nom du navire
@@ -23,6 +24,7 @@ public class AbstractShip
 		this. size = size;
 		this.orientation = orientation;
 		this.strikeCount = 0;
+		this.put = false;
 	}
 
 	/** Mutateur pour l'orientation
@@ -47,6 +49,11 @@ public class AbstractShip
 	public int getLength()
 	{
 		return this.size;
+	}
+
+	public boolean getPut()
+	{
+		return this.put;
 	}
 
 	/**Vérification de si le navire a coulé

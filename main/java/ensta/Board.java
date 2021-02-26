@@ -165,7 +165,7 @@ public class Board implements IBoard
 		oldShips = this.deepcopyShips();
 
 		AbstractShip.Orientation o = ship.getOrientation();
-
+		ship.put = true;
 		try
 		{
 			if (o == AbstractShip.Orientation.EAST)
@@ -219,16 +219,18 @@ public class Board implements IBoard
 		}
 		catch (Illegal­Argument­Exception e)
 		{
-
+			ship.put = false;
 			this.navires = oldShips;
 			System.out.println("Problème de type : " + e.toString()+"\nCréation du navire sur la grille annulée");
 		}
 		catch (Exception e)
-		{
+		{	
+			ship.put = false;
 			this.navires = oldShips;
 			System.out.println("Problème d'indice de type : " + e.toString() );
 			System.out.println("Initialisation du bateau '" + ship.nom.toString() + "' d'orientation '" + ship.orientation + "' annulée\n");
 		}
+
 	}
 
 	public boolean hasShip(int x, int y) 

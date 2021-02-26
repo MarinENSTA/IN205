@@ -44,7 +44,7 @@ public final class InputHelper {
                     if (Arrays.asList(validOrientations).contains(in[1])) {
                         res.orientation = in[1];
                         res.x = coord.charAt(0) - 'a';
-                        res.y = Integer.parseInt(coord.substring(1, coord.length())) - 1;
+                        res.y = Integer.parseInt(coord.substring(1, coord.length())) ;
                         done = true;
                     }
                 }
@@ -70,7 +70,7 @@ public final class InputHelper {
             try {
                 String coord = sin.nextLine().toLowerCase();
                 res.x = coord.charAt(0) - 'a';
-                res.y = Integer.parseInt(coord.substring(1, coord.length())) - 1;
+                res.y = Integer.parseInt(coord.substring(1, coord.length())) ;
                 done = true;
             } catch (Exception e) {
                 // nop
