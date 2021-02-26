@@ -29,7 +29,7 @@ public class ShipState
 	{
 		if (struck != null && struck != true)
 		{
-			struck = true;
+			this.struck = true;
 			ship.addStrike();
 		}
 	}

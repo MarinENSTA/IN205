@@ -233,7 +233,7 @@ public class Board //implements IBoard
 	{
 		try
 		{
-		if (this.navires[y][x].isStruck() == null)
+		if (this.navires[y][x].isStruck() == null || this.navires[y][x].getShip().isSunk())
 			return false;
 		else
 			return true;
@@ -268,6 +268,27 @@ public class Board //implements IBoard
 			System.out.println("Problème d'indice de type : " + e.toString() );
 			System.out.println("Réponse à l'appel getHit("+x+","+y+") impossible, false renvoyé par défaut\n");
 			return false;
+		}
+	}
+
+	Hit sendHit(int x, int y)
+	{	
+		Hit res;
+		if (navires[y][x].isStruck() == null || navires[y][x].isStruck() == true)
+			//Si le navire est déjà touché on renvoie MISS
+			return Hit.MISS;
+
+		else
+		{ 
+			navires[y][x].addStrike();
+			if (navires[y][x].getShip().isSunk())
+			{
+				res = Hit.fromInt(navires[y][x].getShip().size);
+				System.out.println(res.toString()+" ==> coulé\n");
+				return res;
+			}
+			else 
+				return Hit.STRIKE;
 		}
 	}
 	
