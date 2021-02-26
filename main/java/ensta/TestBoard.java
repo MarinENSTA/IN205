@@ -8,13 +8,13 @@ public class TestBoard
     	// Les lignes commentées servent pour les exercices suivants (commits suivants)
 
     	//Test exercice 1
-        Board testBoard = new Board(10, "Test");
+        //Board testBoard = new Board(5, "Test");
         //testBoard.print();
 		
 
 
         //Test exercice 2
-        Destroyer testDestroyer = new Destroyer('E');
+        //Destroyer testDestroyer = new Destroyer('E');
         //System.out.println(testDestroyer.orientation);
         //testDestroyer.setOrientation('N');
         //System.out.println(testDestroyer.orientation);
@@ -43,9 +43,14 @@ public class TestBoard
         //Board testEnnemyBoard = new Board(10, "Test");
         //Player testPlayer = new Player(testBoard,testEnnemyBoard, ships);
 
-
-
-
-
+        //Test exercice 5
+        Board testBoard = new Board(10, "Test");
+        Destroyer testDestroyer = new Destroyer('E');
+        testBoard.putShip(testDestroyer, 0, 4);
+        testBoard.print();
+        testBoard.setHit(true, 1,1);
+        testBoard.navires[4][0].struck = true;
+        testBoard.print();
+        //Cela fonctionne !
     }
 }

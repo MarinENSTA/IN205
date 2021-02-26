@@ -21,6 +21,7 @@ public class AbstractShip
 		this.label = label;
 		this. size = size;
 		this.orientation = orientation;
+		this.strikeCount = 0;
 	}
 
 	/** Mutateur pour l'orientation
@@ -42,5 +43,21 @@ public class AbstractShip
 		return this.size;
 	}
 
+	/**Vérification de si le navire a coulé
+	@return un booléen 
+	*/
+	public boolean isSunk()
+	{
+		boolean sunk = strikeCount == size ? true : false ;
+		return sunk;
+	}
+
+	/**
+	Incrémentation du compteur de Strike sur le navire
+	*/
+	public void addStrike()
+	{
+		strikeCount++;
+	}
 
 }

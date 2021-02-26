@@ -3,8 +3,8 @@ package ensta;
 public class Board //implements IBoard
 {
 
-	private char[][] navires;
-	public boolean[][] frappes;
+	public ShipState[][] navires;
+	public Boolean[][] frappes;
 	private String nom; 
 	public int size;
 
@@ -15,8 +15,8 @@ public class Board //implements IBoard
 	*/
 	public Board(int boardsize, String nom)
 	{
-		this.navires = new char[boardsize][boardsize];
-		this.frappes = new boolean[boardsize][boardsize];
+		this.navires = new ShipState[boardsize][boardsize];
+		this.frappes = new Boolean[boardsize][boardsize];
 		this.nom = nom;
 
 		if (boardsize > 26){
@@ -30,8 +30,8 @@ public class Board //implements IBoard
 		{
 			for (int j = 0 ; j < this.size ; j++)
 			{
-				navires[i][j] = '.';
-				frappes[i][j] = false;
+				navires[i][j] = new ShipState();
+				frappes[i][j] = null;
 			}
 		}
 	}
@@ -50,6 +50,7 @@ public class Board //implements IBoard
 	*/
 	public void print()
 	{
+		try{
 	    System.out.println(this.nom);
 
 	    System.out.print("Navires :");
@@ -65,6 +66,11 @@ public class Board //implements IBoard
 
 	    //impression de la grille
 	    this.printlines();
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getCause().toString());
+		}
 	}
 
 	/** Impression d'une ligne spécifique pour les deux grilles
@@ -83,7 +89,7 @@ public class Board //implements IBoard
 	    	}
 
 	    	for(int j=0 ; j<this.size ; j++){
-	    		System.out.print(this.navires[i][j] + " ");
+	    		System.out.print(this.navires[i][j].toString() + " ");
 	    	}
 	    	System.out.print("  ");
 	    	System.out.print(c + " ");
@@ -93,11 +99,12 @@ public class Board //implements IBoard
 	    	}
 
 	    	for(int j=0 ; j<this.size ; j++){
-	    		if(this.frappes[i][j])
-	    			System.out.print("x ");
-	    		else
+	    		if (this.frappes[i][j] == null)
 	    			System.out.print(". ");
-	    			
+	    		else if(this.frappes[i][j] == true)
+	    			System.out.print(ColorUtil.colorize("X", ColorUtil.Color.RED)+" ");
+	    		else 
+	    			System.out.print ("X ");	    			
 	    	}
 	    	c++;
 	    	System.out.print("\n");
@@ -123,15 +130,15 @@ public class Board //implements IBoard
 	/**Fonction de deepcopy de la grille de navires
 	@return Retourne une grille de navire deepcopiée (non liée à la grille qu'elle copie)
 	*/
-	public char[][] deepcopyShips()
+	public ShipState[][] deepcopyShips()
 	{
-		char[][] deepcopiedShips = new char[this.size][this.size];
+		ShipState[][] deepcopiedShips = new ShipState[this.size][this.size];
 		for (int i = 0; i < this.size; i++)
 		{
 			for (int j = 0; j< this.size; j++)
 			{
-				if (this.navires[i][j]=='.')
-					deepcopiedShips[i][j]='.';
+				if (this.navires[i][j].struck==null)
+					deepcopiedShips[i][j]=new ShipState();
 				else 
 					deepcopiedShips[i][j]=this.navires[i][j];
 			}
@@ -146,7 +153,7 @@ public class Board //implements IBoard
 		return this.size;
 	}
 
-	private char[][] getShips()
+	private ShipState[][] getShips()
 	{
 		return this.navires;
 	}
@@ -154,7 +161,7 @@ public class Board //implements IBoard
 
 	public void putShip(AbstractShip ship, int x, int y)
 	{	
-		char[][] oldShips = new char[this.size][this.size];
+		ShipState[][] oldShips = new ShipState[this.size][this.size];
 		oldShips = this.deepcopyShips();
 
 		try
@@ -163,11 +170,12 @@ public class Board //implements IBoard
 			{
 				for (int j = 0; j < ship.size ; j++)
 				{
-					if (this.navires[y][x+j]!='.')
+					if (this.navires[y][x+j].isStruck()!=null)
 					{
 						throw new Illegal­Argument­Exception ("Bateau déjà présent à cet endroit");
 					}
-					this.navires[y][x+j] = ship.label;
+
+					navires[y][x+j] = new ShipState(ship);
 				}
 			}
 
@@ -175,11 +183,11 @@ public class Board //implements IBoard
 			{	
 				for (int j = 0; j < ship.size ; j++)
 				{
-					if (this.navires[y][x-j]!='.')
+					if (this.navires[y][x-j].isStruck() != null)
 					{
 						throw new Illegal­Argument­Exception ("Bateau déjà présent à cet endroit");
 					}
-					navires[y][x-j] = ship.label;
+					navires[y][x-j] = new ShipState(ship);
 				}
 			}
 
@@ -187,11 +195,11 @@ public class Board //implements IBoard
 			{
 				for (int i = 0; i < ship.size ; i++)
 				{
-					if (this.navires[y+i][x]!='.')
+					if (this.navires[y+i][x].isStruck()!= null)
 					{
 						throw new Illegal­Argument­Exception ("Bateau déjà présent à cet endroit");
 					}
-					navires[y+i][x] = ship.label;
+					navires[y+i][x] = new ShipState(ship);
 				}
 			}
 
@@ -199,11 +207,11 @@ public class Board //implements IBoard
 			{
 				for (int i = 0; i < ship.size ; i++)
 				{
-					if (this.navires[y-i][x]!='.')
+					if (this.navires[y-i][x].isStruck()!= null)
 					{
 						throw new Illegal­Argument­Exception ("Bateau déjà présent à cet endroit");
 					}
-					navires[y-i][x] = ship.label;
+					navires[y-i][x] = new ShipState(ship);
 				}
 			}
 		}
@@ -211,7 +219,7 @@ public class Board //implements IBoard
 		{
 
 			this.navires = oldShips;
-			System.out.println("Problème de type : " + e.toString()+"\n Création du navire sur la grille annulée");
+			System.out.println("Problème de type : " + e.toString()+"\nCréation du navire sur la grille annulée");
 		}
 		catch (Exception e)
 		{
@@ -225,7 +233,7 @@ public class Board //implements IBoard
 	{
 		try
 		{
-		if (this.navires[y][x] == '.')
+		if (this.navires[y][x].isStruck() == null)
 			return false;
 		else
 			return true;
