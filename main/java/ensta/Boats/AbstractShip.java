@@ -5,7 +5,8 @@ public class AbstractShip
 	public char label;
 	public String nom;
 	public int size;
-	public char orientation;
+	public enum Orientation {NORTH,SOUTH,EAST,WEST};
+	public Orientation orientation;
 	public int strikeCount;
 
 	/**Constructeur valué de navire, exercice 2
@@ -15,7 +16,7 @@ public class AbstractShip
 	@param orientation Orientation du navire (N,S,E ou W)
 	@return Pas de retour
 	*/
-	public AbstractShip(String nom, char label, int size, char orientation)
+	public AbstractShip(String nom, char label, int size, Orientation orientation)
 	{
 		this.nom = nom;
 		this.label = label;
@@ -28,9 +29,14 @@ public class AbstractShip
 	@param newOrientation Nouvelle orientation désirée du navire (N,S,E ou W)
 	@return Pas de retour 
 	*/
-	public void setOrientation(char newOrientation)
+	public void setOrientation(Orientation newOrientation)
 	{
 		this.orientation = newOrientation;
+	}
+
+	public Orientation getOrientation()
+	{
+		return this.orientation;
 	}
 
 	public String getName()

@@ -38,7 +38,26 @@ public class Player {
             System.out.println(msg);
             InputHelper.ShipInput res = InputHelper.readShipInput();
             // TODO set ship orientation
-            s.setOrientation(res.orientation.charAt(0));
+
+            char o = res.orientation.charAt(0);
+
+            if (o == 'e') 
+            {
+                s.setOrientation(AbstractShip.Orientation.EAST);
+            }
+            else if (o == 's') 
+            {
+                s.setOrientation(AbstractShip.Orientation.SOUTH);
+            }
+            
+            else if (o == 'w') 
+            {
+                s.setOrientation(AbstractShip.Orientation.WEST);
+            }
+            else if (o == 'n') 
+            {
+                s.setOrientation(AbstractShip.Orientation.NORTH);
+            }
 
             // TODO put ship at given position
             board.putShip(s, res.x, res.y);

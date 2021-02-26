@@ -6,7 +6,7 @@ public class Battleship extends AbstractShip
 	*@param orientation Orientation du navire souhaitée
 	*@return Pas de retour
 	*/
-	public Battleship(char orientation) 
+	public Battleship(AbstractShip.Orientation orientation) 
 	{
 		super("Battleship", 'B', 4, orientation);
 	}
@@ -17,7 +17,7 @@ public class Battleship extends AbstractShip
 	*/
 	public Battleship()
 	{
-		this('E');
+		this(AbstractShip.Orientation.EAST);
 	}
 
 

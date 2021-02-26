@@ -1,6 +1,6 @@
 package ensta;
 
-public class Board //implements IBoard
+public class Board implements IBoard
 {
 
 	public ShipState[][] navires;
@@ -164,9 +164,11 @@ public class Board //implements IBoard
 		ShipState[][] oldShips = new ShipState[this.size][this.size];
 		oldShips = this.deepcopyShips();
 
+		AbstractShip.Orientation o = ship.getOrientation();
+
 		try
 		{
-			if (ship.orientation == 'E')
+			if (o == AbstractShip.Orientation.EAST)
 			{
 				for (int j = 0; j < ship.size ; j++)
 				{
@@ -179,7 +181,7 @@ public class Board //implements IBoard
 				}
 			}
 
-			else if (ship.orientation == 'W')
+			else if (o == AbstractShip.Orientation.WEST)
 			{	
 				for (int j = 0; j < ship.size ; j++)
 				{
@@ -191,7 +193,7 @@ public class Board //implements IBoard
 				}
 			}
 
-			else if (ship.orientation == 'S')
+			else if (o == AbstractShip.Orientation.SOUTH)
 			{
 				for (int i = 0; i < ship.size ; i++)
 				{
@@ -203,7 +205,7 @@ public class Board //implements IBoard
 				}
 			}
 
-			else if (ship.orientation == 'N')
+			else if (o == AbstractShip.Orientation.NORTH)
 			{
 				for (int i = 0; i < ship.size ; i++)
 				{
@@ -271,7 +273,7 @@ public class Board //implements IBoard
 		}
 	}
 
-	Hit sendHit(int x, int y)
+	public Hit sendHit(int x, int y)
 	{	
 		Hit res;
 		if (navires[y][x].isStruck() == null || navires[y][x].isStruck() == true)

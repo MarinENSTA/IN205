@@ -6,7 +6,7 @@ public class Carrier extends AbstractShip
 	*@param orientation Orientation du navire souhaitée
 	*@return Pas de retour
 	*/
-	public Carrier(char orientation) 
+	public Carrier(AbstractShip.Orientation orientation) 
 	{
 		super("Carrier", 'C', 5, orientation);
 	}
@@ -17,7 +17,7 @@ public class Carrier extends AbstractShip
 	*/
 	public Carrier()
 	{
-		this('E');
+		this(AbstractShip.Orientation.EAST);
 	}
 
 

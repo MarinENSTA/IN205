@@ -7,7 +7,7 @@ public class Destroyer extends AbstractShip
 	*@param orientation Orientation du navire souhaitée
 	*@return Pas de retour
 	*/
-	public Destroyer(char orientation) 
+	public Destroyer(AbstractShip.Orientation orientation) 
 	{
 		super("Destroyer", 'D', 2, orientation);
 	}
@@ -18,7 +18,7 @@ public class Destroyer extends AbstractShip
 	*/
 	public Destroyer()
 	{
-		this('E');
+		this(AbstractShip.Orientation.EAST);
 	}
 
 

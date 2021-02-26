@@ -62,7 +62,7 @@ public class TestBoard
         //Test exercice 6
         Hit testHit;
         Board testBoard = new Board(10, "Test");
-        Destroyer testDestroyer = new Destroyer('E');
+        Destroyer testDestroyer = new Destroyer(AbstractShip.Orientation.EAST);
         testBoard.putShip(testDestroyer, 0, 4);
         testHit = testBoard.sendHit(0,4);
        	System.out.println(testHit.toString());

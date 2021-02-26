@@ -6,7 +6,7 @@ public class Submarine extends AbstractShip
 	*@param orientation Orientation du navire souhaitée
 	*@return Pas de retour
 	*/
-	public Submarine(char orientation) 
+	public Submarine(AbstractShip.Orientation orientation) 
 	{
 		super("Submarine", 'S', 3, orientation);
 	}
@@ -17,7 +17,7 @@ public class Submarine extends AbstractShip
 	*/
 	public Submarine()
 	{
-		this('E');
+		this(AbstractShip.Orientation.EAST);
 	}
 
 }
